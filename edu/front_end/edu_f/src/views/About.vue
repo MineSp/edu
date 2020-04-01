@@ -14,6 +14,7 @@ export default {
   background-color: rgb(130, 60, 60);
 }
 h2 {
+  text-align: center;
   color:  rgb(223, 206, 206);
 }
 </style>
