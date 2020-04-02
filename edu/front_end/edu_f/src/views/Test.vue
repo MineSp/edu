@@ -30,7 +30,16 @@ export default {
         { name: "a", id: "23345", sex: "mm", age: "12" }
       ]
     };
-  }
+  },
+  created() {
+    // alert(123),
+    const _this = this
+    _this.$axios.get('http://localhost:8086/stu/findAll').then(function(res){
+      // alert(res),
+      // console.log(res)
+      _this.stus=res.data
+    })
+  }, 
 };
 </script>
 <style scoped>
