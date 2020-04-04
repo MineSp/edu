@@ -1,50 +1,7 @@
+
 <template>
-  <div id="app">
-    <!-- <div id>
-      <router-link to="/home">Home</router-link>
-      <router-link to="/">helloworld</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/test">Test</router-link>
-      <router-link to="/test01">Test01</router-link>
-      <router-link to="/dataanylize">Dataanylize</router-link>
-      <router-link to="/menu">Menu</router-link>
-    </div>
-    <img src="./assets/logo.png">-->
-    <!-- <div>
-      <router-view />
-    </div>-->
-    <div class="right">
-      <el-col :span="12">
-        <el-menu
-          router
-          default-active
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-        >
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">首页</span>
-          </el-menu-item>
-
-          <el-submenu v-for="item in MenuInfoData " :key="item" index="index">
-            <template slot="title">
-              <i class="el-icon-document"></i>
-              <span>{{item.title }}</span>
-            </template>
-
-            <el-menu-item
-              v-for="subItem in item.subItems"
-              :key="subItem"
-              :index="subItem.path"
-            >{{subItem.title +"?"+ subItem.path}}</el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-col>
-    </div>
-    <div>
-      <router-view />
-    </div>
+  <div>
+    <router-view />
   </div>
 </template>
 
@@ -128,6 +85,7 @@ export default {
 
 <style>
 #app {
+  width: 1080;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -135,12 +93,26 @@ export default {
   color: rgb(61, 115, 169);
   margin-top: 60px;
 }
+.el-col {
+  height: 100%;
+  width: 100%;
+}
+.el-aside {
+  width: 10%;
+  border: 1px solid #eee;
+}
+.el-header {
+  /* margin: auto; */
+  border: 1px solid #eee;
+  background-color: cadetblue;
+  text-align: right;
+  font-size: 20px;
+}
+
 .el-menu {
   text-align: left;
-  width: 30%;
-  border: 1px solid #f00;
 }
-:right{
-  margin: auto;
+:right {
+  width: 100%;
 }
 </style>
