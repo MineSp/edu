@@ -1,6 +1,6 @@
-var Msg = new Object()
-Msg.id = "";
-Msg.content = "";
-
-
-export { Msg }
+export default { 
+    Msg:{
+        id:Number,
+        content:Int16Array,
+    }
+ }

@@ -28,5 +28,16 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data() {
+  return {
+      // isLoginDailogVisable:false,
+      username:"用户",
+      isUserLoginIn:false,
+      // test:"",
+      userId:123456,
+      id_id:-2, 
+      id_idname:"游客"
+    }
+  },
 })

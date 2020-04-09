@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style>
- .el-carousel__item h3 {
+ /* .el-carousel__item h3 {
     color: #475669;
     font-size: 90px;
     opacity: 0.75;
@@ -27,6 +27,6 @@ export default {
   
   .el-carousel__item:nth-child(2n+1) {
     background-color: #e91818;
-  }
+  } */
 </style>
 

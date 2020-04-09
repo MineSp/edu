@@ -12,18 +12,29 @@ import java.sql.Date;
 @Entity
 @Data
 public class Msg {
+    /**
+     * 实体类--系统消息
+     * id           int             消息序号
+     * title        String          消息标题
+     * content      String          消息主体
+     * time_pubish  java.sql.Date   发布时间
+     * id——person   long            发布人
+     * enclosure    String          附件
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id =0;
-    private String title ="标题";
-    private String content ="内容";
-    private java.sql.Date time_publish =new Date(System.currentTimeMillis());
-    private Long id_person = 1234567L;
-    private String enclosure ="";
+    private int id = 0;
+    private String title = "标题";
+    private String content = "内容";
+    private java.sql.Date time_publish = new Date(System.currentTimeMillis());
+    private long id_person = 1234567L;
+    private String enclosure = "";
 
     public void setId() {
         this.id = 0;
     }
+
     public void setId(int id) {
         this.id = id;
     }

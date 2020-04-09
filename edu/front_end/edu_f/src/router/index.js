@@ -10,43 +10,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: '测试',
-      component: Menu,
-      children: [
-        {
-
-          path: '/helloworld',
-          name: '哈喽world',
-          component: () => import('@/components/HelloWorld')
-        }, {
-          path: '/about',
-          name: '说明',
-          component: () => import('@/views/About')
-        }, {
-          path: '/home',
-          name: '主页',
-          component: () => import('@/views/Home')
-        }, {
-          path: '/test',
-          name: '测试',
-          component: () => import('@/views/Test.vue')
-        }, {
-          path: '/test01',
-          name: '测试1',
-          component: () => import('@/views/Test01.vue')
-        }, {
-          path: '/dataanylize',
-          name: '图表分析',
-          component: () => import('@/views/Dataanylize.vue')
-        }, {
-          path: '/menu',
-          name: '菜单',
-          component: () => import('@/components/Menu.vue')
-        }
-      ]
-    },
-    {
-      path: '/msg',
       name: '消息系统',
       component: Menu,
       children: [
@@ -54,15 +17,16 @@ export default new Router({
           path: '/massagetable',
           name: '信息列表',
           component: () => import('@/components/msg/MsgTable')
-        }, {
-          path: '/msgeadd',
-          name: '信息添加',
-          component: () => import('@/components/msg/MsgAddPage')
-        },{
-          path: '/msgAbout',
-          name: '信息详情',
-          component: () => import('@/components/msg/MsgAbout')
         }
+        // }, {
+        //   path: '/msgeadd',
+        //   name: '信息添加',
+        //   component: () => import('@/components/msg/MsgAddPage')
+        // },{
+        //   path: '/msgAbout',
+        //   name: '信息详情',
+        //   component: () => import('@/components/msg/MsgAbout')
+        // }
       ]
     }, {
       path: '/mark',
@@ -101,9 +65,9 @@ export default new Router({
       component: Menu,
       children: [
         {
-          path: '/indextable',
+          path: '/indexdbtable',
           name: '指标库',
-          component: () => import('@/components/os/IndexTable')
+          component: () => import('@/components/os/IndexdbTable')
         }, {
           path: '/settingpage',
           name: '系统设置',

@@ -1,12 +1,15 @@
 <template>
   <div>
+    <h1>消息列表</h1>
+    <hr width=50% />
     <!-- 添加按钮 -->
     <span>
       <el-button type="text" @click="addMsgDailog">添加</el-button>
     </span>
+    <hr width=100% />
 
     <!-- 表格 -->
-    <el-table :height="500" :data="msgTableData" border style=" width: 100%" >
+    <el-table :height="500" :data="msgTableData" border style=" width: 100%">
       <el-table-column fixed prop="time_publish" label="日期" width="100"></el-table-column>
       <el-table-column prop="title" label="标题" width="120"></el-table-column>
       <el-table-column prop="content" label="内容" width="auto"></el-table-column>
@@ -31,16 +34,27 @@
       @current-change="page"
     ></el-pagination>
 
-    <!-- 模态对话框实现添加和修改 -->
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="50%" @close="handleClose">
+    <!-- 模态对话框实现添加 修改 查看-->
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="50%"
+      @close="handleClose()"
+    >
       <span>
-        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form ref="msgForm" :model="msgForm" :rules="rules" label-width="80px">
           <el-form-item label="标题" prop="title">
-            <el-input :readonly="isReadOnly ?  'readonly':false" v-model="form.title"></el-input>
+            <el-input :readonly="isReadOnly ?  'readonly':false" v-model="msgForm.title"></el-input>
           </el-form-item>
 
           <el-form-item label="信息内容" prop="content">
-            <el-input type="textarea" rows="10px" cols="20px" v-model="form.content"></el-input>
+            <el-input
+              :readonly="isReadOnly ?  'readonly':false"
+              type="textarea"
+              rows="9px"
+              cols="15px"
+              v-model="msgForm.content"
+            ></el-input>
           </el-form-item>
           <el-upload
             class="upload-demo"
@@ -58,8 +72,8 @@
         </el-form>
       </span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="isSubmit?onAdd('form'):onUpdate('form','')">确定</el-button>
-        <el-button @click="resetForm('form')">返回</el-button>
+        <el-button type="primary" @click="isSubmit?onAdd('msgForm'):onUpdate('msgForm'  )">确定</el-button>
+        <el-button @click="resetForm('msgForm')">返回</el-button>
       </span>
     </el-dialog>
   </div>
@@ -70,7 +84,7 @@ export default {
   data() {
     const _this = this;
     return {
-      form: {
+      msgForm: {
         title: "",
         content: ""
       },
@@ -135,14 +149,14 @@ export default {
     page(currentPage) {
       this.tempRow = {};
       this.currentPageTemp = currentPage;
-      const a = this;
+      const _this = this;
       this.$axios
         .get("http://localhost:8086/msg/findAll/" + (currentPage - 1) + "/10")
         .then(res => {
-          a.msgTableData = res.data.content;
+          _this.msgTableData = res.data.content;
           console.log(res.data);
-          a.total = res.data.totalElements;
-          a.pageSize = res.data.size;
+          _this.total = res.data.totalElements;
+          _this.pageSize = res.data.size;
         });
     },
 
@@ -151,7 +165,7 @@ export default {
      */
     addMsgDailog() {
       this.isReadOnly = false;
-      this.dialogTitle = "add";
+      this.dialogTitle = "添加信息";
       this.dialogVisible = true;
     },
     /**
@@ -166,8 +180,8 @@ export default {
         .get("http://localhost:8086/msg/findById/" + row.id)
         .then(res => {
           console.log(res);
-          this.form.title = res.data.title;
-          this.form.content = res.data.content;
+          this.msgForm.title = res.data.title;
+          this.msgForm.content = res.data.content;
         });
       // console.log(row);
     },
@@ -185,8 +199,8 @@ export default {
           // console.log(res);
           this.tempRow = res.data;
           console.log(this.tempRow);
-          this.form.title = res.data.title;
-          this.form.content = res.data.content;
+          this.msgForm.title = res.data.title;
+          this.msgForm.content = res.data.content;
         });
     },
 
@@ -215,7 +229,7 @@ export default {
         this.$refs[formName].validate(valid => {
           if (valid) {
             this.$axios
-              .post("http://localhost:8086/msg/save", this.form)
+              .post("http://localhost:8086/msg/save", this.msgForm)
               .then(res => {
                 console.log(res);
                 if (res.data == "success") {
@@ -244,8 +258,8 @@ export default {
       const _this = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.tempRow.title = this.form.title;
-          this.tempRow.content = this.form.content;
+          this.tempRow.title = this.msgForm.title;
+          this.tempRow.content = this.msgForm.content;
           this.$axios
             .put("http://localhost:8086/msg/update", this.tempRow)
             .then(res => {
@@ -274,7 +288,7 @@ export default {
      * 对话框关闭后重置数据
      */
     handleClose() {
-      this.$refs["form"].resetFields();
+      this.$refs["msgForm"].resetFields();
       dialogVisible: false;
     }
   }

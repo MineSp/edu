@@ -5,12 +5,15 @@
         <el-container>
           <el-aside>
             <el-menu router class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+              <el-menu-item id="id_idname">
+                
+                <span>{{this.$root.id_idname}}</span>
+              </el-menu-item>
               <el-menu-item index="/">
                 <i class="el-icon-menu"></i>
                 <span slot="title">首页</span>
               </el-menu-item>
-
-              <el-submenu v-for="(item,index) in $router.options.routes" :key="item" :index="index">
+              <el-submenu v-for="(item,index) in $router.options.routes" :key="item"  :index="index">
                 <template slot="title">
                   <i class="el-icon-document"></i>
                   <span>{{item.name}}</span>
@@ -26,17 +29,7 @@
           </el-aside>
 
           <el-container>
-            <el-header>
-              <el-dropdown>
-                <i class="el-icon-setting" style="margin-right: 15px"></i>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>个人中心</el-dropdown-item>
-                  <el-dropdown-item>登录</el-dropdown-item>
-                  <el-dropdown-item>退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <span>王小虎</span>
-            </el-header>
+              <!-- <HeaderBar /> -->
             <el-main>
               <router-view />
             </el-main>
@@ -46,3 +39,54 @@
     </div>
   </div>
 </template>
+
+<script>
+// import { menu } from "./components/Menu";
+import  HeaderBar  from "../components/HeaderBar";
+export default {
+  name: "Menu",
+  components: { HeaderBar },
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      window.console.log(key, keyPath);
+      window.console.log("key ？", key);
+      window.console.log("keypath ?", keyPath);
+    },
+    handleClose(key, keyPath) {
+      window.console.log(key, keyPath);
+    }
+  }
+};
+</script>
+
+<style>
+
+.el-col {
+  height: 100%;
+  width: 100%;
+}
+.el-aside {
+   
+  width: 10%;
+  border: 1px solid #eee;
+}
+
+
+.el-menu {
+  text-align: left;
+}
+:right {
+  width: 100%;
+}
+#id_idname{
+  text-align: center;background-color: cornflowerblue;
+}
+#id_idname span{
+  font-size: 30px;
+}
+</style>

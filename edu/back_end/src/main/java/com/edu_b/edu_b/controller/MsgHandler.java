@@ -7,9 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.util.List;
-
 @RestController
 @RequestMapping("/msg")
 public class MsgHandler {
@@ -24,6 +21,7 @@ public class MsgHandler {
 
     @PostMapping("/save")
     public String Save(@RequestBody Msg msg) {
+
         Msg result = msgRepository.save(msg);
         if (result != null) {
             return "success";
