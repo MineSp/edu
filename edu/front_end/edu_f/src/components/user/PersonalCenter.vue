@@ -1,11 +1,7 @@
 <template>
   <div id="personalcenter">
     <span>
-      <img
-        src="http://i0.hdslb.com/bfs/article/824a48e5cc43ce5500941b221cd5b14ee7c1a758.jpg"
-        height="150"
-        width="150"
-      />
+      <img src="@/assets/imgzero.jpg" height="150" width="150" />
     </span>
 
     <hr />
@@ -15,7 +11,7 @@
     </el-dialog>
 
     <div id="main">
-      <el-form ref="userForm" :model="userForm" :rules="rules" label-width="40%">
+      <el-form ref="userForm" :model="userForm" :rules="rules" label-width="50%">
         <el-form-item label="用户姓名：" prop="title">
           <i>{{userForm.username}}</i>
         </el-form-item>
@@ -126,9 +122,11 @@ export default {
       emailtemp: ""
     };
   },
+
   created() {
+    
     this.$axios
-      .get("http://localhost:8086/user/personalCenter/" + this.$root.userId)
+      .get("http://localhost:8086/user/personalCenter/" + this.getCookie("useraccount"))
       .then(res => {
         // console.log(res.data);
         this.sextemp = res.data.sex;
@@ -137,8 +135,12 @@ export default {
         this.userForm = res.data;
         // this.fristFrom = res.data;
       });
+      
   },
   methods: {
+    /**
+     * test
+     */
     updateButton(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -150,9 +152,8 @@ export default {
             this.fristFrom.sex = this.userForm.sex;
             this.fristFrom.age = this.userForm.age;
             this.fristFrom.email = this.userForm.email;
-            this.fristFrom.id_id = this.$root.id_id;
-            this.fristFrom.userId = this.$root.userId;
-
+            this.fristFrom.id_id = this.getCookie("id_id");
+            this.fristFrom.userId = this.getCookie("useraccout");
             this.$axios
               .put("http://localhost:8086/user/updatePersonal", this.fristFrom)
               .then(res => {

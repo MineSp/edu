@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1>消息列表</h1>
-    <hr width=50% />
+    <hr width="50%" />
     <!-- 添加按钮 -->
     <span>
-      <el-button type="text" @click="addMsgDailog">添加</el-button>
+      <el-button v-if="showAdd" type="text" @click="addMsgDailog">添加</el-button>
     </span>
-    <hr width=100% />
+    <hr width="100%" />
 
     <!-- 表格 -->
     <el-table :height="500" :data="msgTableData" border style=" width: 100%">
@@ -19,8 +19,8 @@
       <el-table-column fixed="right" label="操作" width="130">
         <template slot-scope="scope">
           <el-button @click="showMsgAbout(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small" @click="updateMsg(scope.row)">修改</el-button>
-          <el-button type="text" size="small" @click="DelMsg(scope.row)">删除</el-button>
+          <el-button v-if="showUpdate" type="text" size="small" @click="updateMsg(scope.row)">修改</el-button>
+          <el-button v-if="showDelete" type="text" size="small" @click="DelMsg(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -131,10 +131,16 @@ export default {
        * table数据主体
        */
       msgTableData: [],
-      tempRow: {}
+      tempRow: {},
+      showUpdate: false,
+      showDelete: false,
+      showAdd:false,
     };
   },
   created() {
+    this.showUpdate = this.getCookie("id_id")  >1 || this.getCookie("id_id") < 0;
+    this.showDelete = this.getCookie("id_id") < 0;
+    this.showAdd = this.getCookie("id_id")==2;
     const _this = this;
     this.$axios.get("http://localhost:8086/msg/findAll/0/10").then(res => {
       _this.msgTableData = res.data.content;

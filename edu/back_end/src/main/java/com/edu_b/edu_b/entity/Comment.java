@@ -25,7 +25,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int id_index;
-    private String mark;
+//    private String mark;
     private int type;
     private int id_type;
     private long id_person;

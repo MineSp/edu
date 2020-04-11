@@ -34,11 +34,11 @@ export default {
   methods: {
     closeCourseMark(doit) {
       this.courseMarkForm.list = this.indexOpenData;
-      this.courseMarkForm.id_person = this.$root.userId;
+      this.courseMarkForm.id_person = this.getCookie("useraccount");
       this.courseMarkForm.type = 0;
       this.courseMarkForm.id_type = this.temp;
       this.$axios
-        .post("http://localhost:8086/comment/save", this.courseMarkForm)
+        .post("http://localhost:8086/comment/saveAll", this.courseMarkForm)
         .then(res => {
           console.log(res.data);
           if (res.data == "success") {

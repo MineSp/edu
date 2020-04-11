@@ -18,24 +18,24 @@
     <el-table :height="550" :data="courseTableData" border style="width: 100%">
       <el-table-column fixed prop="courseid" label="课程号" width="100"></el-table-column>
       <el-table-column prop="name" label="课程名字" width="200"></el-table-column>
-      <el-table-column prop="type" label="课程类型" width="150"></el-table-column>
+      <!-- <el-table-column prop="type" label="课程类型" width="150"></el-table-column> -->
       <el-table-column prop="addr" label="上课地点" width="auto"></el-table-column>
-      <el-table-column prop="time_week" label="上课时间" width="150"></el-table-column>
+      <el-table-column prop="time_week" label="上课时间" width="200"></el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="aboutButton(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="markButton(scope.row)" type="text" size="small">评价</el-button>
-          <el-button @click="anylizeButton(scope.row)" type="text" size="small">数据分析图</el-button>
+          <el-button v-if="id_id==2" @click="anylizeButton(scope.row)" type="text" size="small">数据分析图</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+    <!-- <el-pagination
       background
       layout="prev, pager, next"
       :total="total"
       :page-size="pageSize"
       @current-change="page"
-    ></el-pagination>
+    ></el-pagination> -->
   </div>
 </template>
 
@@ -70,19 +70,19 @@ export default {
       this.courseAnylizeVisible = data;
     },
 
-    page(currentPage) {
-      const _this = this;
-      this.$axios
-        .get(
-          "http://localhost:8086/course/findAll/" + (currentPage - 1) + "/10"
-        )
-        .then(res => {
-          _this.courseTableData = res.data.content;
-          // console.log(res.data);
-          _this.total = res.data.totalElements;
-          _this.pageSize = res.data.size;
-        });
-    }
+    // page(currentPage) {
+    //   const _this = this;
+    //   this.$axios
+    //     .get(
+    //       "http://localhost:8086/course/findAll/" + (currentPage - 1) + "/10"
+    //     )
+    //     .then(res => {
+    //       _this.courseTableData = res.data.content;
+    //       // console.log(res.data);
+    //       _this.total = res.data.totalElements;
+    //       _this.pageSize = res.data.size;
+    //     });
+    // }
   },
 
   data() {
@@ -93,15 +93,22 @@ export default {
       courseid: 0,
       courseAboutVisible: false,
       courseMarkVisible: false,
-      courseAnylizeVisible: false
+      courseAnylizeVisible: false,
+      id_id :0,
     };
   },
   created() {
+    this.id_id = this.getCookie("id_id");
     const _this = this;
-    this.$axios.get("http://localhost:8086/course/findAll/0/10").then(res => {
-      _this.courseTableData = res.data.content;
-      _this.total = res.data.totalElements;
-      _this.pageSize = res.data.size;
+    // this.$axios.get("http://localhost:8086/course/findAll/0/10").then(res => {
+    //   _this.courseTableData = res.data.content;
+    //   _this.total = res.data.totalElements;
+    //   _this.pageSize = res.data.size;
+    // });
+        this.$axios.get("http://localhost:8086/course/findAllList/"+this.getCookie("useraccount")+"/"+this.getCookie("id_id")).then(res => {
+      _this.courseTableData = res.data;
+      // _this.total = res.data.totalElements;
+      // _this.pageSize = res.data.size;
     });
   }
 };

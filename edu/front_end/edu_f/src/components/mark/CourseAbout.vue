@@ -5,12 +5,24 @@
     <hr />
     <div>
       <el-form height="10" ref="courseAboutForm" :model="courseAboutForm" label-width="100px">
-        <el-form-item label="课程类型：">{{courseAboutForm.typename}}</el-form-item>
-        <el-form-item label="开设时间：">{{courseAboutForm.time_start}}</el-form-item>
-        <el-form-item label="所属学院：">{{courseAboutForm.collegename}}</el-form-item>
-        <el-form-item label="任课教师：">{{courseAboutForm.workername}}</el-form-item>
-        <el-form-item label="上课地点：">{{courseAboutForm.addr}}</el-form-item>
-        <el-form-item label="上课时间：">{{courseAboutForm.time_week}}</el-form-item>
+        <el-form-item label="课程类型：">
+          <i>{{courseAboutForm.typename}}</i>
+        </el-form-item>
+        <el-form-item label="开设时间：">
+          <i>{{courseAboutForm.time_start}}</i>
+        </el-form-item>
+        <el-form-item label="所属学院：">
+          <i>{{courseAboutForm.collegename}}</i>
+        </el-form-item>
+        <el-form-item label="任课教师：">
+          <i>{{courseAboutForm.workername}}</i>
+        </el-form-item>
+        <el-form-item label="上课地点：">
+          <i>{{courseAboutForm.addr}}</i>
+        </el-form-item>
+        <el-form-item label="上课时间：">
+          <i>{{courseAboutForm.time_week}}</i>
+        </el-form-item>
         <!-- <el-form-item label="学历：">{{courseAboutForm.edu}}</el-form-item> -->
       </el-form>
     </div>

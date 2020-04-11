@@ -11,11 +11,15 @@ export default new Router({
     {
       path: '/',
       name: '消息系统',
+      show: true,
+      open: 0,
       component: Menu,
       children: [
         {
           path: '/massagetable',
           name: '信息列表',
+          show: true,
+          open: 0,
           component: () => import('@/components/msg/MsgTable')
         }
         // }, {
@@ -31,19 +35,27 @@ export default new Router({
     }, {
       path: '/mark',
       name: '评分系统',
+      show: true,
+      open: 0,
       component: Menu,
       children: [
         {
           path: '/classestable',
           name: '班级列表',
+          show: true,
+          open: 2,
           component: () => import('@/components/mark/ClassesTable')
         }, {
           path: '/coursestable',
           name: '课程列表',
+          show: true,
+          open: 0,
           component: () => import('@/components/mark/CoursesTable')
         }, {
           path: '/workerstable',
           name: '教师列表',
+          show: true,
+          open: 0,
           component: () => import('@/components/mark/WorkersTable')
         }
       ]
@@ -51,29 +63,69 @@ export default new Router({
     {
       path: '/person',
       name: '个人相关',
+      show: true,
+      open: 0,
       component: Menu,
       children: [
         {
           path: '/personalcenter',
           name: '个人中心',
+          show: true,
+          open: 0,
           component: () => import('@/components/user/PersonalCenter')
+        },
+        {
+          path: '/login',
+          name: '登录',
+          show: false,
+          open: 0,
+          component: () => import('@/components/user/Login')
+        }, {
+          path: '/home',
+          name: "首页",
+          show: false,
+          open: 0,
+          component: () => import('@/views/Home')
         }
       ]
     }, {
+      path: '/comm',
+      name: '留言系统',
+      show: true,
+      open: 3,
+      component: Menu,
+      children: [
+        {
+          path: '/commenttable',
+          name: '留言列表',
+          show: true,
+          open: 3,
+          component: () => import('@/components/commentary/CommentTable')
+        },
+      ]
+    },
+    {
       path: '/os',
       name: '系统操作',
+      show: true,
+      open: 3,
       component: Menu,
       children: [
         {
           path: '/indexdbtable',
           name: '指标库',
+          show: true,
+          open: 3,
+
           component: () => import('@/components/os/IndexdbTable')
         }, {
           path: '/settingpage',
           name: '系统设置',
+          show: true,
+          open: 3,
           component: () => import('@/components/os/SettingPage')
         }
       ]
-    }
+    },
   ]
 })

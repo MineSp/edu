@@ -9,37 +9,30 @@
       <Login v-on:closeLoginBox="closeLoginBox" />
     </el-dialog>
     <span>
-      <img
-        src="http://i0.hdslb.com/bfs/article/824a48e5cc43ce5500941b221cd5b14ee7c1a758.jpg"
-        height="50"
-        width="50"
-      />
+      <img src="../assets/imgzero.jpg" height="50" width="50" />
       <label>
         欢迎你
         <el-dropdown>
           <span>
-            {{this.$root.username}}
+            {{username}}
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="this.$root.isUserLoginIn" index='/personalcenter' >
-                <el-button type="text">个人中心</el-button>
+              <el-dropdown-item v-if="isUserLoginIn">
+                <router-link to="/personalcenter">个人中心</router-link>
+                <!-- <el-button type="text"></el-button> -->
               </el-dropdown-item>
-              <el-dropdown-item>
-                <el-button
-                  v-if="this.$root.isUserLoginIn==false"
-                  type="text"
-                  @click="LoginInbutton()"
-                >登录</el-button>
+              <el-dropdown-item v-if="!isUserLoginIn">
+                <el-button type="text" @click="LoginInbutton()">登录</el-button>
               </el-dropdown-item>
-              <el-dropdown-item v-if="this.$root.isUserLoginIn">
-                <el-button  type="text" @click="LoginOutbutton()">登出</el-button>
+              <el-dropdown-item v-else>
+                <el-button type="text" @click="LoginOutbutton()">登出</el-button>
               </el-dropdown-item>
             </el-dropdown-menu>
           </span>
         </el-dropdown>
+        ——你是【{{id_idname}}】
       </label>
       <!--  -->
       <i class="title">教育质量评价与反馈系统</i>
-      <hr />
     </span>
   </div>
 </template>
@@ -49,35 +42,66 @@ export default {
   data() {
     return {
       isUserLoginIn: false,
-      isLoginDailogVisable: false
+      isLoginDailogVisable: false,
+      username: "",
+      id_idname: "",
     };
   },
   components: { Login },
   created() {
-    console.log(this.$root.isUserLoginIn);
+    if (
+      typeof this.getCookie("useraccount") == undefined ||
+      this.getCookie("useraccount") == 0
+    ) {
+      this.isUserLoginIn == false;
+      this.username = "用户";
+      this.id_idname = "";
+    } else {
+      this.getCookie("useraccount");
+      if (typeof this.getCookie("username") == undefined) {
+      } else {
+        this.username = this.getCookie("username");
+        this.id_idname = this.getCookie("id_idname");
+      }
+      this.isUserLoginIn = this.getCookie("isUserLoginIn");
+    }
   },
   methods: {
     closeLoginBox(data) {
-      this.isLoginDailogVisable = data;
+      // console.log("ccc", this.g_useraccount);
+
+      this.isUserLoginIn = true;
+      this.isLoginDailogVisable = false;
+      this.username = data.username;
+      this.id_idname = this.getCookie("id_idname");
     },
     LoginInbutton() {
       // console.log('yes');
-
       this.isLoginDailogVisable = true;
     },
     LoginOutbutton() {
+      // console.log("res", console.log("res"));
       this.$axios
-        .post("http://localhost:8086/user/loginOut", {useraccount:this.$root.userId})
+        .post("http://localhost:8086/user/loginOut", {
+          useraccount: this.getCookie("useraccount")
+        })
         .then(res => {
-          console.log( "res",res);
-          
+          // console.log("res");
+          this.isUserLoginIn = false;
+          this.setCookie("useraccount", 0, 1000);
+          this.setCookie("isUserLoginIn", false, 1000);
+          this.setCookie("id_id", -2, 1000);
+          this.setCookie("username", "用户", 1000);
+          this.setCookie("id_idname", "游客", 1000);
+          this.username = this.getCookie("username");
+          this.id_idname = this.getCookie("id_idname");
           this.$message.success(res.data);
-          this.$root.isUserLoginIn = false;
-          this.$root.username = "游客";
-          this.$root.id_idname = "游客";
-          this.$root.id_id = -2;
-          this.$root.userId='';
+          this.$router.push('/')
+          window.location.reload();
+          console.log("finish!");
+          
         });
+      // 
     }
   }
 };
@@ -105,5 +129,12 @@ export default {
   margin-top: 0%;
   /* height: 10px; */
   margin-bottom: 0%;
+}
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
 }
 </style>

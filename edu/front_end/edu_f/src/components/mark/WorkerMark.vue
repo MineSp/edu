@@ -38,13 +38,13 @@ export default {
   methods: {
     closeWorkerMark(doit) {
       this.workerMarkForm.list = this.indexOpenData;
-      this.workerMarkForm.id_person = this.$root.userId;
+      this.workerMarkForm.id_person = this.getCookie("useraccount");
       this.workerMarkForm.type = 1;
       this.workerMarkForm.id_type = this.temp;
       // console.log("?", this.workerMarkForm);
       // console.log("??", this.indexOpenData);
       this.$axios
-        .post("http://localhost:8086/comment/save", this.workerMarkForm)
+        .post("http://localhost:8086/comment/saveAll", this.workerMarkForm)
         .then(res => {
           console.log(res.data);
           if (res.data == "success") {

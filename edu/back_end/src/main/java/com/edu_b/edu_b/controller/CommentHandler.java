@@ -4,8 +4,10 @@ import com.edu_b.edu_b.demo.AnylizeComment;
 import com.edu_b.edu_b.demo.CommentComplete;
 import com.edu_b.edu_b.entity.Comment;
 import com.edu_b.edu_b.entity.Indexdb;
+import com.edu_b.edu_b.entity.Mark;
 import com.edu_b.edu_b.repository.CommentRepository;
 import com.edu_b.edu_b.repository.IndexdbRepository;
+import com.edu_b.edu_b.repository.MarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,28 +25,60 @@ public class CommentHandler {
     @Autowired
     private IndexdbRepository indexdbRepository;
 
+    @Autowired
+    private MarkRepository markRepository;
 
-    @PostMapping("/save")
-    public String Save(@RequestBody CommentComplete commentComplete) {
+
+//    @PostMapping("/save")
+//    public String Save(@RequestBody CommentComplete commentComplete) {
+//        Date date = new Date(System.currentTimeMillis());
+//        String result = "success";
+//
+//
+//        for (int i = 0; i < commentComplete.getList().size(); i++) {
+//            Comment comment = new Comment();
+//            comment.setId_index(commentComplete.getList().get(i).getId());
+////            comment.setMark(commentComplete.getMark());
+//            comment.setType(commentComplete.getType());
+//            comment.setId_type(commentComplete.getId_type());
+//            comment.setId_person(commentComplete.getId_person());
+//            comment.setScore(commentComplete.getList().get(i).getScore());
+//            comment.setTime_content(date);
+//            if (commentRepository.save(comment) == null) {
+//                result = "error";
+//            }
+//        }
+//        return result;
+//    }
+
+    @PostMapping("/saveAll")
+    public String SaveAll(@RequestBody CommentComplete commentComplete) {
         Date date = new Date(System.currentTimeMillis());
         String result = "success";
-
-
+        Mark mark = new Mark();
+        mark.setIdperson(commentComplete.getId_person());//mark-idperson
+        mark.setType(commentComplete.getType());//mark-type
+        mark.setMark(commentComplete.getMark());//mark-mark
         for (int i = 0; i < commentComplete.getList().size(); i++) {
             Comment comment = new Comment();
             comment.setId_index(commentComplete.getList().get(i).getId());
-            comment.setMark(commentComplete.getMark());
+
+//            comment.setMark(commentComplete.getMark());
+
             comment.setType(commentComplete.getType());
             comment.setId_type(commentComplete.getId_type());
             comment.setId_person(commentComplete.getId_person());
             comment.setScore(commentComplete.getList().get(i).getScore());
             comment.setTime_content(date);
-            if (commentRepository.save(comment) == null) {
+            if (commentRepository.save(comment) == null || markRepository.save(mark) == null) {
                 result = "error";
             }
         }
+
+
         return result;
     }
+
 
     @GetMapping("/anylizeData/{type}/{id_type}")
     public List<AnylizeComment> anylizeData(@PathVariable("type") Integer type, @PathVariable("id_type") int id_type) {

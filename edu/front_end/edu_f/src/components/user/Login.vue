@@ -11,7 +11,7 @@
           <el-form-item label="密码" prop="password">
             <el-input
               style="width:50%"
-              placeholder="密码如'abcde'"
+              placeholder="密码如'abcdef'"
               type="password"
               v-model="form.password"
             ></el-input>
@@ -63,22 +63,27 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.islogin == 1) {
-
-            if(res.data.id_id==-1){
+            if (res.data.id_id == -1) {
               this.$root.id_idname = "管理员";
-            }else if(res.data.id_id==0){
+              this.setCookie("id_idname", "管理员", 1000);
+            } else if (res.data.id_id == 0) {
               this.$root.id_idname = "学生";
-            }else if(res.data.id_id==1){
+              this.setCookie("id_idname", "学生", 1000);
+            } else if (res.data.id_id == 1) {
               this.$root.id_idname = "教师";
-            }else {
+              this.setCookie("id_idname", "教师", 1000);
+            } else {
               this.$root.id_idname = "督导员";
+              this.setCookie("id_idname", "督导员", 1000);
             }
             this.$message.success("登录成功！");
-            this.$root.userId = res.data.useraccount;
-            this.$root.username = res.data.username;
-            this.$root.isUserLoginIn = true;
-            this.$root.id_id = res.data.id_id;
-            this.cancelButton(false);
+            this.setCookie("id_id", res.data.id_id, 1000);
+            this.setCookie("useraccount", res.data.useraccount, 1000);
+            this.setCookie("username", res.data.username, 1000);
+            this.setCookie("isUserLoginIn", true, 1000);
+            this.setCookie("isUserLogiid_idnIn", res.data.id_id, 1000);
+            this.cancelButton(res.data);
+            location.reload();
           } else {
             this.$message.error("登录失败");
           }

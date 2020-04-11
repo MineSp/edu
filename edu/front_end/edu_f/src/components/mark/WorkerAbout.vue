@@ -5,13 +5,27 @@
     <hr />
     <div>
       <el-form height="10" ref="workerAboutForm" :model="workerAboutForm" label-width="80px">
-        <el-form-item label="学院：">{{workerAboutForm.collegename}}</el-form-item>
-        <el-form-item label="工号：">{{workerAboutForm.workerid}}</el-form-item>
-        <el-form-item label="性别：">{{workerAboutForm.sex}}</el-form-item>
-        <el-form-item label="年龄：">{{workerAboutForm.age}}</el-form-item>
-        <el-form-item label="手机号：">{{workerAboutForm.phone}}</el-form-item>
-        <el-form-item label="邮箱：">{{workerAboutForm.email}}</el-form-item>
-        <el-form-item label="学历：">{{workerAboutForm.edu}}</el-form-item>
+        <el-form-item label="学院：">
+          <i>{{workerAboutForm.collegename}}</i>
+        </el-form-item>
+        <el-form-item label="工号：">
+          <i>{{workerAboutForm.workerid}}</i>
+        </el-form-item>
+        <el-form-item label="性别：">
+          <i>{{workerAboutForm.sex}}</i>
+        </el-form-item>
+        <el-form-item label="年龄：">
+          <i>{{workerAboutForm.age}}</i>
+        </el-form-item>
+        <el-form-item label="手机号：">
+          <i>{{workerAboutForm.phone}}</i>
+        </el-form-item>
+        <el-form-item label="邮箱：">
+          <i>{{workerAboutForm.email}}</i>
+        </el-form-item>
+        <el-form-item label="学历：">
+          <i>{{workerAboutForm.edu}}</i>
+        </el-form-item>
       </el-form>
     </div>
     <el-button type="primary" @click.prevent="closeWorkerAbout(false)">确认</el-button>

@@ -1,14 +1,12 @@
 
 <template>
   <div id="home">
-    <h1>home home home home home home</h1>
-    
-    <img src="@/assets/logo.png" />
+    <h1>这里是首页</h1>
+    <!-- <img src="@/assets/imgzero.jpg" /> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
 export default {
   name: "Home"
 };

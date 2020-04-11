@@ -1,10 +1,8 @@
 package com.edu_b.edu_b.controller;
 
 import com.edu_b.edu_b.demo.WorkerComplete;
-import com.edu_b.edu_b.entity.College;
-import com.edu_b.edu_b.entity.Worker;
-import com.edu_b.edu_b.repository.CollegeRepository;
-import com.edu_b.edu_b.repository.WorkerRepository;
+import com.edu_b.edu_b.entity.*;
+import com.edu_b.edu_b.repository.*;
 //import com.sun.tools.javac.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,6 +25,18 @@ public class WorkerHandler {
     @Autowired
     private CollegeRepository collegeRepository;
 
+    @Autowired
+    private StuRepository stuRepository;
+
+    @Autowired
+    private SupervisorRepository supervisorRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private SADRepository sadRepository;
+
     /**
      * 按页数查询
      *
@@ -37,6 +48,47 @@ public class WorkerHandler {
     public Page<Worker> findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         return workerRepository.findAll(pageRequest);
+    }
+
+    @GetMapping("/findAllList/{useraccount}/{id_id}")
+    public List<Worker> findAllList(@PathVariable("useraccount") long useraccount, @PathVariable("id_id") Integer id_id) {
+        List<Worker> workerList = new ArrayList<>();
+
+        if (id_id == 0) {
+            //stu
+            List<Stuandcourse> stuandcourseList = sadRepository.findAll();
+            List<Course> courseList = courseRepository.findAll();
+            for (int i = 0; i < stuandcourseList.size(); i++) {
+                if (stuandcourseList.get(i).getId_stu() != useraccount) {
+                    stuandcourseList.remove(i);
+                    i--;
+                } else {
+                    for(int j = 0 ;j< courseList.size();j++){
+                        if(courseList.get(j).getCourseid()==stuandcourseList.get(i).getId_course()){
+                            workerList.add(workerRepository.findByWorkerid(courseList.get(j).getId_worker()).get());
+                            courseList.remove(j);
+                            j--;
+                        }
+                    }
+                }
+            }
+            Stu stu = stuRepository.findByStudentid(useraccount).get();
+
+        } else if (id_id == 1) {
+            //worker
+            List<Worker> workerList1 = workerRepository.findAll();
+            Worker worker = workerRepository.findByWorkerid(useraccount).get();
+            for (int i =0 ;i<workerList1.size();i++){
+                if(workerList1.get(i).getId_college()== worker.getId_college()){
+                    workerList.add(workerList1.get(i));
+                    workerList1.remove(i);
+                    i--;
+                }
+            }
+        } else {
+            workerList = workerRepository.findAll();
+        }
+        return workerList;
     }
 
     @GetMapping("/findById/{id}")

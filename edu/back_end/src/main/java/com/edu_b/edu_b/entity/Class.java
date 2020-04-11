@@ -27,5 +27,4 @@ public class Class {
     private long id_college;
     private long id_worker;
     private long id_spec;
-
 }
