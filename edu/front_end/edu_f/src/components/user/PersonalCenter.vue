@@ -124,18 +124,21 @@ export default {
   },
 
   created() {
-    
+    // console.log("useraccount",this.getCookie("useraccount"));
     this.$axios
-      .get("http://localhost:8086/user/personalCenter/" + this.getCookie("useraccount"))
+      .get(
+        "http://localhost:8086/user/personalCenter/" +
+          this.getCookie("useraccount")
+      )
       .then(res => {
         // console.log(res.data);
         this.sextemp = res.data.sex;
         this.agetemp = res.data.age;
         this.emailtemp = res.data.email;
         this.userForm = res.data;
+        
         // this.fristFrom = res.data;
       });
-      
   },
   methods: {
     /**
@@ -152,8 +155,11 @@ export default {
             this.fristFrom.sex = this.userForm.sex;
             this.fristFrom.age = this.userForm.age;
             this.fristFrom.email = this.userForm.email;
+            
             this.fristFrom.id_id = this.getCookie("id_id");
-            this.fristFrom.userId = this.getCookie("useraccout");
+            this.fristFrom.userId = this.getCookie("useraccount");
+            // console.log("useraccount",this.getCookie("useraccount"));
+            // console.log("this" , this.fristFrom.userId);
             this.$axios
               .put("http://localhost:8086/user/updatePersonal", this.fristFrom)
               .then(res => {
